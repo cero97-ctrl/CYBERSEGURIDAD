@@ -14,15 +14,15 @@ Construir una suite de herramientas de auditoría en Python, cubriendo las fases
 
 \section*{Consideraciones Generales}
 \begin{itemize}
-    \item \textbf{Evaluación:} Cada semana, se evaluará la funcionalidad, eficiencia, claridad del código y manejo de errores de cada estudiante. Al final del semestre, la calidad y robustez del programa final serán los criterios principales.
+    \item \textbf{Evaluación:} Cada semana se evaluará el progreso individual dentro de los grupos. Se valorará la funcionalidad, el cumplimiento de los estándares de código (Type Hinting, Docstrings) y el manejo de errores.
     \item \textbf{Recursos:} Los estudiantes deben tener acceso a las librerías necesarias (python-whois, dnspython, socket, etc.) y a documentación relevante.
     \item \textbf{Flexibilidad:} Se Permitirá cierta flexibilidad en la elección de temas, siempre que se ajusten a los objetivos generales del curso.
-    \item \textbf{Colaboración:} Cada estudiante trabajará en un código diferente, fomentando de esa manera la discusión y el intercambio de ideas entre ellos.
+    \item \textbf{Colaboración:} El curso cuenta con \textbf{13 estudiantes divididos en 4 grupos de trabajo especializado}. Cada grupo es responsable de un módulo del sistema, fomentando la arquitectura desacoplada y el desarrollo en paralelo.
     \item \textbf{Texto Guía} El libro por el que guiarán para sus trabajos esta disponible en mi cuenta MEGA.
 \end{itemize}
 
 \section*{Planificación Semanal}
-Cada semana, cada estudiante elegirá un subtema diferente dentro del tema general y desarrollará un código en Python relacionado.
+El proyecto se desarrolla de forma modular. Aunque los temas se presentan cronológicamente, los grupos trabajarán en paralelo según la asignación técnica.
 
 \subsection*{Parte I: Recopilación de Información y Escaneo (Semanas 1-4)}
 \textit{Referencia del Libro:} Capítulos 1, 2 y 3.
@@ -56,7 +56,8 @@ Cada semana, cada estudiante elegirá un subtema diferente dentro del tema gener
 \begin{itemize}
     \item \textbf{Estudiante 1:} Escáner de puertos con \textbf{TCP Connect()}. Es el más simple y ruidoso, pero fundamental para entender el proceso.
     \item \textbf{Estudiante 2:} Escáner de puertos con \textbf{TCP SYN (Half-open)}. Más sigiloso y rápido. Requiere la creación de sockets raw (en Linux/macOS) o el uso de librerías como Scapy.
-    \item \textbf{Estudiante 3:} Escáner de puertos \textbf{UDP}. Más lento y menos fiable, pero crucial para encontrar servicios como DNS, SNMP o VoIP.
+    \item \textbf{Estudiante 3:} Escáner de puertos \textbf{UDP} y manejo de respuestas ICMP Port Unreachable.
+    \item \textbf{Estudiante 4:} Implementación de \textbf{Banner Grabbing} inicial para identificación de servicios tras el escaneo.
 \end{itemize}
 
 \subsection*{Parte II: Enumeración y Ataques a Servicios (Semanas 5-7)}
@@ -116,4 +117,3 @@ Cada semana, cada estudiante elegirá un subtema diferente dentro del tema gener
 Este plan ofrece una progresión lógica, aumenta la complejidad gradualmente y asegura que cada estudiante sea evaluado por su propio trabajo, mientras contribuye a un objetivo común.
 
 \end{document}
-
