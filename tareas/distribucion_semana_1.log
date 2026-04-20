@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.8.3)  19 APR 2026 09:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.8.3)  20 APR 2026 04:52
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -197,7 +197,7 @@ Overfull \hbox (71.62729pt too wide) in paragraph at lines 57--58
 []\OT1/cmr/bx/n/12 Estudiante 2: \OT1/cmr/m/n/12 Im-ple-men-tar l^^Sogi-ca de \OT1/cmr/bx/n/12 con-cu-rren-cia \OT1/cmr/m/n/12 (uso de \OT1/cmtt/m/n/12 threading \OT1/cmr/m/n/12 o \OT1/cmtt/m/n/12 concurrent.futures\OT1/cmr/m/n/12 ). 
  []
 
-[2] (./distribucion_semana_1.aux
+[2] [3] (./distribucion_semana_1.aux
 LaTeX Info: Redefining \. on input line 8.
 LaTeX Info: Redefining \% on input line 8.
 )
@@ -207,18 +207,18 @@ L3 programming layer <2024-01-22>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 4111 strings out of 474222
- 65903 string characters out of 5748734
- 1930975 words of memory out of 5000000
- 26371 multiletter control sequences out of 15000+600000
- 563446 words of font info for 54 fonts, out of 8000000 for 9000
+ 4122 strings out of 474222
+ 66099 string characters out of 5748734
+ 1932975 words of memory out of 5000000
+ 26382 multiletter control sequences out of 15000+600000
+ 563753 words of font info for 55 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,7n,65p,337b,365s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on distribucion_semana_1.pdf (2 pages, 77786 bytes).
+Output written on distribucion_semana_1.pdf (3 pages, 81644 bytes).
 PDF statistics:
- 41 PDF objects out of 1000 (max. 8388607)
- 24 compressed objects within 1 object stream
+ 44 PDF objects out of 1000 (max. 8388607)
+ 26 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

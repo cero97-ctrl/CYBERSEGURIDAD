@@ -67,6 +67,35 @@ Para el inicio del proyecto, los 13 estudiantes se dividirán en 4 grupos de tra
     \item \textbf{Documentación:} Use Docstrings estilo Google y Type Hinting.
 \end{enumerate}
 
+\section{Anexo: Guía de Estándares de Código}
+
+\subsection{Type Hinting (Tipado de Datos)}
+Permite declarar qué tipo de datos espera una función y qué devolverá, ayudando al editor a detectar errores.
+\begin{itemize}
+    \item \textbf{Argumentos:} \texttt{nombre\_variable: tipo} (ej: \texttt{domain: str}).
+    \item \textbf{Retorno:} \texttt{-> tipo} (ej: \texttt{-> dict}).
+\end{itemize}
+
+\subsection{Docstrings (Estilo Google)}
+Es el formato estándar para documentar la lógica de la función. Debe incluir:
+\begin{itemize}
+    \item \textbf{Args:} Lista de parámetros, su tipo y una breve descripción.
+    \item \textbf{Returns:} Descripción del valor de retorno y su estructura.
+\end{itemize}
+
+\textbf{Ejemplo de referencia para los estudiantes:}
+\begin{verbatim}
+def mi_funcion(dominio: str) -> dict:
+    """
+    Realiza una consulta específica al dominio.
+    Args:
+        dominio (str): El nombre de dominio a investigar.
+    Returns:
+        dict: Resultados siguiendo el esquema JSON definido.
+    """
+    pass
+\end{verbatim}
+
 \vfill
 \centering
 \textit{Recuerde consultar el manual 'Hackers 6' disponible en el repositorio.}

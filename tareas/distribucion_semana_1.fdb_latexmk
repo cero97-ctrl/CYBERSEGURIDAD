@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1776605588.28042 "/home/cero/MEGA/VS_CODE_WORKSPACE/CYBERSEGURIDAD/tareas/distribucion_semana_1.tex" "distribucion_semana_1.pdf" "distribucion_semana_1" 1776605589.6124 0
+["pdflatex"] 1776675166.9598 "/home/cero/MEGA/VS_CODE_WORKSPACE/CYBERSEGURIDAD/tareas/distribucion_semana_1.tex" "distribucion_semana_1.pdf" "distribucion_semana_1" 1776675168.28909 0
   "/etc/texmf/web2c/texmf.cnf" 1754246095.34578 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/cero/MEGA/VS_CODE_WORKSPACE/CYBERSEGURIDAD/tareas/distribucion_semana_1.tex" 1776605561.43594 3480 3a2ad4cf7ce52ee8ff83b6acd856e5fb ""
+  "/home/cero/MEGA/VS_CODE_WORKSPACE/CYBERSEGURIDAD/tareas/distribucion_semana_1.tex" 1776675163.71348 4531 7c010c441433738d15e20db81ba3ea9f ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1136768653 1324 c910af8c371558dc20f2d7822f66fe64 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm" 1136768653 1524 4414a8315f39513458b80dfc63bff03a ""
@@ -46,8 +46,8 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1707919699 40399 f2c302f7d2af602abb742093540a5834 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1754246131.98867 5472669 54eaf61a88b6b7896ebd0dac973cb29c ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1754246351 8211763 bcebfc983d877799c23bfb0bbf784be3 ""
-  "distribucion_semana_1.aux" 1776605589.49183 952 4a2b793f894839c41aa569fe1af292ab "pdflatex"
-  "distribucion_semana_1.tex" 1776605561.43594 3480 3a2ad4cf7ce52ee8ff83b6acd856e5fb ""
+  "distribucion_semana_1.aux" 1776675168.15345 1320 fba07c736b15bcf7d36dd6c6897490a4 "pdflatex"
+  "distribucion_semana_1.tex" 1776675163.71348 4531 7c010c441433738d15e20db81ba3ea9f ""
   (generated)
   "distribucion_semana_1.aux"
   "distribucion_semana_1.log"
