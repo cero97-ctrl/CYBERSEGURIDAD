@@ -42,6 +42,62 @@ def get_whois_data(domain: str) -> dict:
     
     return resultado
 
+def get_subdomains_via_dorks(domain: str) -> dict:
+    """
+    Estudiante 2: Busca subdominios asociados al dominio objetivo usando Google Dorks.
+    
+    Args:
+        domain (str): Dominio principal a investigar (ej. uapa.edu.do).
+        
+    Returns:
+        dict: Resultados siguiendo el esquema oficial del proyecto.
+    """
+    resultado = {
+        "modulo": "OSINT",
+        "grupo": 2,
+        "estudiante": "E2",
+        "target": domain,
+        "timestamp": datetime.datetime.now().isoformat(),
+        "status": "success",
+        "data": {},
+        "error_message": None
+    }
+    
+    try:
+        # 1. Definimos nuestro Google Dork
+        dork = f"site:*.{domain} -www"
+        print(f"  [G2-E2] Buscando subdominios con el Dork: {dork}")
+        
+        enlaces_encontrados = []
+        
+        # 2. Búsqueda en Google (limitamos a 10 resultados, pausando 5 seg)
+        try:
+            for url in search(dork, num_results=10, sleep_interval=5):
+                enlaces_encontrados.append(url)
+        except Exception as search_err:
+            # 3. Si Google nos bloquea, lo atrapamos elegantemente
+            if "429" in str(search_err):
+                print("    [!] Aviso G2-E2: Google limitó las consultas (Error 429). Guardando lo encontrado...")
+            else:
+                # Si es otro error distinto, lo enviamos al except principal
+                raise search_err
+                
+        # 4. Filtramos duplicados (convertir a 'set' y luego a 'list' borra los repetidos)
+        subdominios_unicos = list(set(enlaces_encontrados))
+        
+        # 5. Llenamos nuestro contrato de datos
+        resultado["data"] = {
+            "dork_utilizado": dork,
+            "total_encontrados": len(subdominios_unicos),
+            "subdominios": subdominios_unicos
+        }
+        
+    except Exception as e:
+        resultado["status"] = "error"
+        resultado["error_message"] = f"Falló la búsqueda de subdominios: {str(e)}"
+        
+    return resultado
+    
 def check_archivos_expuestos(target: str) -> dict:
     """
     Estudiante 3: Detección de archivos expuestos en el target usando Google Dorks.
@@ -110,4 +166,4 @@ def check_archivos_expuestos(target: str) -> dict:
         resultado["status"] = "error"
         resultado["error_message"] = str(e)
         
-    return resultado
+    return resultado
