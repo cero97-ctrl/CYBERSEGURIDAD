@@ -1,29 +1,29 @@
-# Information Security Auditing Suite
+# Suite de Auditoría de Seguridad Informática
 
-This project is a modular auditing tool developed collaboratively by the 13 students of the **Information Security** course.
+Este proyecto es una herramienta modular de auditoría desarrollada de forma colaborativa por los 13 estudiantes del curso de **Seguridad Informática**.
 
-## 🚀 Parallel Work and Collaboration Guide
+## 🚀 Guía de Trabajo en Paralelo y Colaboración
 
-To maximize efficiency and avoid bottlenecks, the project uses a decoupled architecture. This allows the 4 groups to work simultaneously without depending on each other's progress.
+Para maximizar la eficiencia y evitar cuellos de botella, el proyecto utiliza una arquitectura desacoplada. Esto permite que los 4 grupos trabajen simultáneamente sin depender del progreso de los demás.
 
-### 1. Module Independence
-Each group has its own development file in the `modulos/` folder.
+### 1. Independencia por Módulos
+Cada grupo tiene su propio archivo de desarrollo en la carpeta `modulos/`.
 - **Grupo 1 (DNS):** `modulos/dns_recon.py`
 - **Grupo 2 (OSINT):** `modulos/osint.py`
 - **Grupo 3 (Discovery):** `modulos/discovery.py`
 - **Grupo 4 (Scanning):** `modulos/scanning.py`
 
-**Golden Rule:** It is strictly forbidden to modify `auditoria.py` or other groups' files. Your work is limited exclusively to your assigned file.
+**Regla de Oro:** Está estrictamente prohibido modificar `auditoria.py` o los archivos de otros grupos. Tu trabajo se limita exclusivamente a tu archivo asignado.
 
-### 2. The Data Contract (The Key to Parallelism)
-You don't need to wait for the "Reconnaissance" groups to finish for your "Scanning" code to work. Integration does not depend on others' code, but on **compliance with the output contract**.
-- All functions must return a dictionary that complies with the schema defined in `docs/schema_resultados.json`.
-- As long as you respect this format, the main orchestrator and the future reporting module will work correctly.
+### 2. El Contrato de Datos (La Clave del Paralelismo)
+No necesitas esperar a que los grupos de "Reconocimiento" terminen para que tu código de "Escaneo" funcione. La integración no depende del código de otros, sino del **cumplimiento del contrato de salida**.
+- Todas las funciones deben devolver un diccionario que cumpla con el esquema definido en `docs/schema_resultados.json`.
+- Mientras respetes este formato, el orquestador principal y el futuro módulo de reportes funcionarán correctamente.
 
-### 3. Unit Tests
-You can (and should) test your functionality in isolation using known test targets (e.g., `google.com` or `8.8.8.8`).
+### 3. Pruebas de Unidad
+Puedes (y debes) probar tu funcionalidad de forma aislada usando objetivos de prueba conocidos (ej. `google.com` o `8.8.8.8`).
 ```bash
-# Example: Group 4 can test its scanner without waiting for Group 1
+# Ejemplo: El Grupo 4 puede probar su escáner sin esperar al Grupo 1
 python auditoria.py 8.8.8.8 --scan 80,443
 ```
 

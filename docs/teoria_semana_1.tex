@@ -1,0 +1,125 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{listings}
+
+\geometry{a4paper, margin=1in}
+
+\titleformat{\section}{\normalfont\Large\bfseries\color{blue}}{}{0pt}{}
+\titleformat{\subsection}{\normalfont\large\bfseries\color{darkgray}}{}{0pt}{}
+
+\title{Base Teórica - Semana 1 \\ \large Curso: Seguridad Informática}
+\author{Prof. César Rodríguez}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section*{Introducción}
+\addcontentsline{toc}{section}{Introducción}
+Este documento proporciona los fundamentos teóricos necesarios para desarrollar los módulos correspondientes a la \textbf{Semana 1}. Está estructurado según las responsabilidades de cada grupo de trabajo.
+
+\section{Grupo 1: Reconocimiento DNS}
+El Sistema de Nombres de Dominio (DNS) es la agenda telefónica de Internet. Traduce nombres de dominio legibles por humanos (como \texttt{google.com}) a direcciones IP legibles por máquinas.
+
+\subsection{Tipos de Registros DNS Clave}
+\begin{itemize}[label=$\bullet$]
+    \item \textbf{Registro A (Address):} Asocia un nombre de dominio con una dirección IPv4 (ej. 192.168.1.1). Es el registro más fundamental.
+    \item \textbf{Registro AAAA:} Funciona exactamente igual que el registro A, pero asocia el dominio a una dirección IPv6.
+    \item \textbf{Registro MX (Mail Exchange):} Indica qué servidores de correo están autorizados a aceptar correos electrónicos en nombre del dominio.
+    \item \textbf{Registro NS (Name Server):} Delega una zona DNS para utilizar los servidores de nombres especificados. Indica dónde se administran realmente los registros del dominio.
+    \item \textbf{Registro TXT (Text):} Permite a los administradores insertar texto arbitrario en el registro DNS. Se usa comúnmente para verificación de dominio y políticas de seguridad de correo (como SPF, DKIM o DMARC).
+    \item \textbf{Registro SOA (Start of Authority):} Contiene información administrativa sobre la zona DNS, como el correo del administrador, el número de serie de la zona y los tiempos de actualización.
+\end{itemize}
+
+\textit{Sugerencia de implementación:} La librería \texttt{dnspython} proporciona el método \texttt{dns.resolver.resolve()} que facilita la consulta de cualquiera de estos registros.
+
+\section{Grupo 2: OSINT y Huella Digital}
+OSINT (Open-Source Intelligence) es la recopilación y análisis de información obtenida de fuentes públicas y abiertas.
+
+\subsection{WHOIS}
+WHOIS es un protocolo de consulta y respuesta ampliamente utilizado para consultar bases de datos que almacenan los usuarios registrados o asignatarios de un recurso de Internet, como un nombre de dominio o un bloque de direcciones IP. 
+\begin{itemize}
+    \item Proporciona: Fechas de creación/expiración, registrador, correos electrónicos de contacto y servidores DNS asociados.
+\end{itemize}
+\textit{Sugerencia:} En Python, la librería \texttt{python-whois} facilita esta extracción devolviendo un diccionario manejable.
+
+\subsection{Google Dorks (Google Hacking)}
+Consiste en utilizar operadores de búsqueda avanzados de Google para encontrar información sensible que ha sido indexada por el buscador (a menudo por error de configuración del administrador).
+\begin{itemize}
+    \item \texttt{site:dominio.com} - Restringe los resultados a un dominio específico.
+    \item \texttt{-www} - Excluye el subdominio 'www', revelando a menudo otros subdominios menos conocidos (ej. \texttt{site:ejemplo.com -www}).
+    \item \texttt{filetype:ext} - Busca archivos con una extensión específica (ej. \texttt{filetype:log}, \texttt{filetype:env}, \texttt{filetype:sql}).
+    \item \texttt{intitle:} o \texttt{inurl:} - Busca cadenas específicas en el título de la página o en la URL (ej. \texttt{intitle:"index of"}).
+\end{itemize}
+
+\section{Grupo 3: Descubrimiento de Hosts}
+Antes de atacar o auditar, se debe saber qué equipos están "vivos" (encendidos y conectados a la red).
+
+\subsection{Ping Sweep (ICMP Echo Request)}
+Es la técnica más básica. Envía un paquete \texttt{ICMP Type 8} (Echo Request) a cada IP en una red. Si el host está vivo y no bloquea ICMP, responde con un \texttt{ICMP Type 0} (Echo Reply).
+
+\subsection{Rangos de Red y CIDR}
+CIDR (Classless Inter-Domain Routing) es una forma de representar rangos de IPs. Por ejemplo, \texttt{192.168.1.0/24} representa las 256 direcciones desde \texttt{192.168.1.0} hasta \texttt{192.168.1.255}.
+\textit{Sugerencia:} Python incluye el módulo \texttt{ipaddress} que facilita iterar sobre rangos de red usando notación CIDR (\texttt{ipaddress.ip\_network()}).
+
+\subsection{TCP SYN Ping}
+Muchos firewalls modernos bloquean el tráfico ICMP (ping tradicional). Para eludirlos, los atacantes y auditores envían un paquete TCP con el flag SYN (intento de conexión) a un puerto que suele estar abierto (como el 80 o el 443).
+\begin{itemize}
+    \item Si el puerto está abierto, el host responde con SYN-ACK.
+    \item Si el puerto está cerrado, responde con RST (Reset).
+    \item En ambos casos, el auditor confirma que el host está \textbf{vivo}.
+\end{itemize}
+
+\section{Grupo 4: Escaneo de Puertos y Servicios}
+Una vez descubierto un host, el siguiente paso es descubrir qué servicios (y en qué puertos) está ejecutando.
+
+\subsection{Escáner TCP Connect}
+Se basa en completar el "Three-way Handshake" (saludo de tres vías) completo de TCP:
+\begin{enumerate}
+    \item El auditor envía un paquete \textbf{SYN}.
+    \item El objetivo responde con \textbf{SYN-ACK} (si el puerto está abierto).
+    \item El auditor responde con \textbf{ACK}, completando la conexión, y luego la cierra.
+\end{enumerate}
+Es el escaneo más sencillo de programar en Python usando la librería estándar \texttt{socket} (\texttt{socket.connect\_ex()}), aunque es ruidoso y queda registrado en los logs del servidor.
+
+\subsection{Concurrencia}
+Escanear 65,535 puertos uno por uno de forma secuencial tomaría horas. Para acelerar el proceso, se usan \textbf{hilos (threads)}. Un hilo permite lanzar múltiples intentos de conexión de manera casi simultánea. En Python se puede usar \texttt{threading} o, mejor aún, \texttt{concurrent.futures.ThreadPoolExecutor}.
+
+\subsection{Escaneo UDP}
+A diferencia de TCP, UDP no tiene estado y no realiza un saludo inicial.
+\begin{itemize}
+    \item Se envía un paquete UDP vacío al puerto.
+    \item Si no hay respuesta, el puerto suele estar \textbf{abierto} o filtrado (el servicio recibió el paquete y lo ignoró al no entenderlo).
+    \item Si el puerto está cerrado, el host normalmente responde con un paquete \textbf{ICMP Port Unreachable} (Tipo 3, Código 3).
+\end{itemize}
+Dado que los paquetes se pueden perder en la red, el escaneo UDP suele ser más lento e impreciso que el TCP.
+
+\subsection{Banner Grabbing}
+Saber que el puerto 22 o el 80 están abiertos no es suficiente. El "Banner Grabbing" consiste en conectarse al puerto abierto, enviar unos bytes de prueba (o simplemente esperar a que el servidor hable) y capturar el texto que el servicio devuelve de forma predeterminada (el "Banner"). Este banner suele revelar el nombre y la versión del software (ej. \texttt{OpenSSH 8.2p1} o \texttt{Apache/2.4.41}), lo cual es fundamental para buscar vulnerabilidades asociadas a esa versión.
+
+\newpage
+\section*{Glosario de Términos}
+\addcontentsline{toc}{section}{Glosario de Términos}
+\begin{description}
+    \item[Banner Grabbing] Técnica de recolección de información que consiste en conectarse a un puerto abierto y leer el mensaje de bienvenida (``banner'') para identificar el servicio y su versión.
+    \item[CIDR] \textit{Classless Inter-Domain Routing} (Enrutamiento Inter-Dominios sin Clases). Método para asignar direcciones IP y enrutar paquetes, comúnmente usado para denotar rangos de red (ej. /24).
+    \item[DNS] \textit{Domain Name System} (Sistema de Nombres de Dominio). Servicio que traduce nombres legibles (dominios) en direcciones IP numéricas.
+    \item[Google Dorks] Uso de operadores de búsqueda avanzada en Google para encontrar información sensible, archivos expuestos o vulnerabilidades no intencionadas.
+    \item[ICMP] \textit{Internet Control Message Protocol}. Protocolo de red utilizado para enviar mensajes de error e información operativa, como el comando de red \texttt{ping}.
+    \item[OSINT] \textit{Open-Source Intelligence} (Inteligencia de Fuentes Abiertas). Recopilación y análisis de información de fuentes públicas disponibles.
+    \item[TCP] \textit{Transmission Control Protocol}. Protocolo de comunicaciones orientado a la conexión que garantiza la entrega ordenada y sin errores de los paquetes de datos.
+    \item[UDP] \textit{User Datagram Protocol}. Protocolo de comunicaciones sin conexión que envía paquetes sin garantizar su entrega ni orden, siendo más rápido pero menos fiable que TCP.
+    \item[WHOIS] Protocolo de red utilizado para consultar bases de datos públicas sobre el registro de nombres de dominio y bloques de direcciones IP.
+\end{description}
+
+\end{document}

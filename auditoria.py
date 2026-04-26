@@ -10,6 +10,18 @@ try:
 except ImportError:
     HAS_JSONSCHEMA = False
 
+# Validación pre-importación de los archivos de módulos
+modulos_esperados = ["dns_recon.py", "osint.py", "discovery.py", "scanning.py"]
+directorio_modulos = os.path.join(os.path.dirname(os.path.abspath(__file__)), "modulos")
+
+for modulo in modulos_esperados:
+    if not os.path.isfile(os.path.join(directorio_modulos, modulo)):
+        print(f"\n[!] ERROR CRÍTICO: Falta el archivo '{modulo}' en la carpeta 'modulos/'.")
+        print("    Recuerda la 'Regla de Oro': Los scripts de los grupos deben mantener sus")
+        print("    nombres originales (dns_recon.py, osint.py, discovery.py, scanning.py).")
+        print("    Por favor, verifica que no haya sido renombrado o eliminado.\n")
+        sys.exit(1)
+
 from modulos import dns_recon   # Grupo 1
 from modulos import osint       # Grupo 2
 from modulos import discovery   # Grupo 3
@@ -45,10 +57,35 @@ def ejecutar_modulo(func, *args, **kwargs):
         resultado = func(*args, **kwargs)
         if resultado:
             validar_resultado(resultado)
+            return resultado
     except NotImplementedError as e:
         print(f"\n[!] Característica en desarrollo: {e}")
     except Exception as e:
         print(f"\n[!] Error inesperado en {func.__name__}: {e}")
+    return None
+
+def guardar_historial(resultados):
+    """
+    Guarda la lista de resultados en un archivo JSON para mantener un historial.
+    """
+    if not resultados:
+        return
+
+    archivo_historial = os.path.join(os.path.dirname(os.path.abspath(__file__)), "historial_auditoria.json")
+    historial = []
+
+    if os.path.isfile(archivo_historial):
+        try:
+            with open(archivo_historial, "r", encoding="utf-8") as f:
+                historial = json.load(f)
+        except json.JSONDecodeError:
+            pass # Si el archivo está corrupto o vacío, iniciamos de cero
+
+    historial.extend(resultados)
+
+    with open(archivo_historial, "w", encoding="utf-8") as f:
+        json.dump(historial, f, indent=4)
+    print(f"\n[*] Historial guardado exitosamente. Se agregaron {len(resultados)} registro(s) a 'historial_auditoria.json'.")
 
 def main():
     parser = argparse.ArgumentParser(
@@ -79,26 +116,35 @@ def main():
 
     print(f"[*] Iniciando auditoria para: {args.target}")
 
+    resultados_totales = []
+
     # Ejecución modular con manejo de errores individual
     try:
         if args.dns_all or args.dns_a:
-            ejecutar_modulo(dns_recon.get_a_records, args.target)
+            res = ejecutar_modulo(dns_recon.get_a_records, args.target)
+            if res: resultados_totales.append(res)
         
         if args.dns_all or args.dns_mxns:
-            ejecutar_modulo(dns_recon.get_mx_ns_records, args.target)
+            res = ejecutar_modulo(dns_recon.get_mx_ns_records, args.target)
+            if res: resultados_totales.append(res)
             
         if args.dns_all or args.dns_txtsoa:
-            ejecutar_modulo(dns_recon.get_txt_soa_records, args.target)
+            res = ejecutar_modulo(dns_recon.get_txt_soa_records, args.target)
+            if res: resultados_totales.append(res)
 
         if args.whois:
-            ejecutar_modulo(osint.get_whois_data, args.target)
+            res = ejecutar_modulo(osint.get_whois_data, args.target)
+            if res: resultados_totales.append(res)
 
         if args.ping_sweep:
-            ejecutar_modulo(discovery.ping_sweep, args.target)
+            res = ejecutar_modulo(discovery.ping_sweep, args.target)
+            if res: resultados_totales.append(res)
 
         if args.scan:
-            ejecutar_modulo(scanning.scan_ports_dispatcher, args.target, args.scan)
+            res = ejecutar_modulo(scanning.scan_ports_dispatcher, args.target, args.scan)
+            if res: resultados_totales.append(res)
 
+        guardar_historial(resultados_totales)
     except AttributeError as e:
         print(f"\n[!] Error en la estructura de los módulos: {e}")
 
