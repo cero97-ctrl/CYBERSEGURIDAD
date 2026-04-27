@@ -1,0 +1,30 @@
+[
+    {
+        "modulo": "OSINT",
+        "grupo": 2,
+        "estudiante": "E2",
+        "target": "target.com",
+        "timestamp": "2026-04-26T20:10:08.495531",
+        "status": "success",
+        "data": {
+            "dork_utilizado": "site:*.target.com -www",
+            "total_encontrados": 0,
+            "subdominios": []
+        },
+        "error_message": null
+    },
+    {
+        "modulo": "OSINT",
+        "grupo": 2,
+        "estudiante": "E3",
+        "target": "target.com",
+        "timestamp": "2026-04-26T20:10:09.065483",
+        "status": "success",
+        "data": {
+            "total_encontrados": 0,
+            "archivos_indexados": [],
+            "nota": "B\u00fasqueda completada o interrumpida por rate-limit de Google."
+        },
+        "error_message": null
+    }
+]

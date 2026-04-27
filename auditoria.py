@@ -136,6 +136,14 @@ def main():
             res = ejecutar_modulo(osint.get_whois_data, args.target)
             if res: resultados_totales.append(res)
 
+        if args.dorks:
+            # Ejecuta la función del Estudiante 2 (Subdominios)
+            res_dorks = ejecutar_modulo(osint.get_subdomains_via_dorks, args.target)
+            if res_dorks: resultados_totales.append(res_dorks)
+            # Ejecuta la función del Estudiante 3 (Archivos expuestos)
+            res_archivos = ejecutar_modulo(osint.check_archivos_expuestos, args.target)
+            if res_archivos: resultados_totales.append(res_archivos)
+
         if args.ping_sweep:
             res = ejecutar_modulo(discovery.ping_sweep, args.target)
             if res: resultados_totales.append(res)
