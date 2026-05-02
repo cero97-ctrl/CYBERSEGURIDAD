@@ -4,4 +4,7 @@ jsonschema
 datetime
 requests
 googlesearch-python
+ipaddress
+subprocess
+scapy
 
