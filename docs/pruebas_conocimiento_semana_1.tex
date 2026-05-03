@@ -1,0 +1,125 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\geometry{a4paper, margin=1in}
+
+\titleformat{\section}{\normalfont\Large\bfseries\color{blue}}{}{0pt}{}
+\titleformat{\subsection}{\normalfont\large\bfseries\color{darkgray}}{}{0pt}{}
+
+\title{Pruebas de Conocimiento - Semana 1 \\ \large Curso: Seguridad Informática}
+\author{Prof. César Rodríguez}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+% ==========================================
+% PRUEBAS DE CONOCIMIENTO
+% ==========================================
+
+\section{Prueba de Conocimiento - Grupo 1: Reconocimiento DNS}
+\textbf{Instrucciones:} Responda a las siguientes preguntas basándose en los conceptos teóricos del Sistema de Nombres de Dominio (DNS).
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item ¿Cuál es la función principal de un registro DNS de tipo \textbf{A} y en qué se diferencia de un registro \textbf{AAAA}?
+    \item Durante una auditoría, se le pide identificar los servidores encargados de recibir el correo electrónico de la organización. ¿Qué tipo de registro DNS debe consultar?
+    \item ¿Qué utilidad tiene el registro \textbf{TXT} desde el punto de vista de la seguridad y configuración de un dominio? Mencione al menos un uso común.
+    \item Explique brevemente qué información provee el registro \textbf{SOA} (Start of Authority).
+    \item ¿Qué indica el registro \textbf{NS} sobre la infraestructura de un dominio objetivo?
+\end{enumerate}
+
+\vspace{1cm}
+
+\section{Prueba de Conocimiento - Grupo 2: OSINT y Huella Digital}
+\textbf{Instrucciones:} Responda a las siguientes preguntas relacionadas con la recopilación de inteligencia de fuentes abiertas.
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item ¿Qué significa el acrónimo \textbf{OSINT} y cuál es su característica principal a la hora de recopilar información?
+    \item Si realiza una consulta \textbf{WHOIS} sobre un dominio objetivo, ¿qué tres datos críticos podría obtener para la fase de reconocimiento?
+    \item ¿Qué resultado espera obtener al utilizar el \textit{Google Dork} \texttt{site:dominio.com -www}? ¿Por qué es útil esta técnica?
+    \item Escriba el \textit{Google Dork} exacto que utilizaría para buscar archivos de configuración (\texttt{.ini}) o de entorno (\texttt{.env}) expuestos accidentalmente en el dominio \texttt{ejemplo.com}.
+    \item Al automatizar búsquedas en Google mediante scripts, ¿qué significa si recibe un error \textbf{429} y cómo debería manejarlo su código?
+\end{enumerate}
+
+\newpage
+
+\section{Prueba de Conocimiento - Grupo 3: Descubrimiento de Hosts}
+\textbf{Instrucciones:} Responda a las siguientes preguntas sobre técnicas para determinar qué equipos están activos en una red.
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item En un \textbf{Ping Sweep} tradicional, ¿qué tipo de paquete (Tipo ICMP) se envía a los objetivos y qué respuesta se espera de un host "vivo"?
+    \item Explique qué representa la notación \textbf{CIDR} \texttt{192.168.1.0/24} en términos de cantidad de direcciones IP que deben ser escaneadas.
+    \item Muchos firewalls modernos bloquean el tráfico ICMP por defecto. ¿Qué técnica alternativa de "Ping" basada en TCP se utiliza comúnmente para eludir esta restricción?
+    \item Si se envía un paquete \textbf{TCP SYN} a un puerto (ej. 80) de un objetivo y este responde con un paquete \textbf{RST} (Reset), ¿qué conclusión saca el auditor sobre el estado del host y del puerto?
+    \item Mencione la librería estándar de Python recomendada en la teoría para iterar y manejar rangos de red de forma eficiente.
+\end{enumerate}
+
+\vspace{1cm}
+
+\section{Prueba de Conocimiento - Grupo 4: Escaneo de Puertos y Servicios}
+\textbf{Instrucciones:} Responda a las siguientes preguntas sobre identificación de servicios y puertos abiertos.
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Describa los tres pasos del saludo de tres vías (\textit{Three-way Handshake}) que ocurre durante un \textbf{Escaneo TCP Connect} si un puerto está abierto.
+    \item ¿Por qué es fundamental implementar \textbf{concurrencia} (uso de hilos o \textit{threads}) al desarrollar un escáner de puertos?
+    \item A diferencia de TCP, el escaneo \textbf{UDP} se considera "sin estado" (stateless). ¿Cómo deduce el escáner que un puerto UDP está cerrado basándose en el protocolo ICMP?
+    \item Defina la técnica de \textbf{Banner Grabbing} y explique por qué es el paso lógico inmediato después de descubrir un puerto abierto.
+    \item Durante un escaneo UDP, si envía un paquete y \textbf{no} recibe ninguna respuesta, ¿qué dos estados posibles puede tener ese puerto según la teoría?
+\end{enumerate}
+
+\newpage
+
+% ==========================================
+% RESPUESTAS ESPERADAS (CLAVE PARA EL PROFESOR)
+% ==========================================
+
+\section{Clave de Respuestas (Para Evaluación)}
+%\addcontentsline{toc}{section}{Clave de Respuestas}
+
+\subsection{Grupo 1: Reconocimiento DNS}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item El registro \textbf{A} asocia un nombre de dominio con una dirección IP versión 4 (IPv4). Se diferencia del registro \textbf{AAAA} en que este último asocia el dominio a una dirección IPv6.
+    \item Se debe consultar el registro \textbf{MX} (Mail Exchange), ya que indica qué servidores están autorizados para recibir correos del dominio.
+    \item Permite insertar texto arbitrario. En seguridad, se utiliza comúnmente para la verificación de propiedad del dominio y para establecer políticas de seguridad de correo electrónico como \textbf{SPF}, DKIM o DMARC, ayudando a prevenir el spoofing.
+    \item El registro \textbf{SOA} provee información administrativa sobre la zona DNS, tal como el correo del administrador, el número de serie de la zona y los tiempos de actualización/refresco.
+    \item El registro \textbf{NS} indica dónde se administran realmente los registros del dominio (servidores de nombres autoritativos), delegando la zona a esos servidores específicos.
+\end{enumerate}
+
+\subsection{Grupo 2: OSINT y Huella Digital}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item \textbf{OSINT} significa \textit{Open-Source Intelligence} (Inteligencia de Fuentes Abiertas). Su característica principal es que la recopilación y análisis se realiza exclusivamente mediante fuentes públicas y disponibles legalmente (sin interactuar ilícitamente con los sistemas del objetivo).
+    \item Fechas de creación y expiración del dominio, nombre de la organización o registrante, y servidores DNS asociados (o correos electrónicos de contacto).
+    \item Se espera encontrar subdominios menos conocidos. Restringe la búsqueda al dominio objetivo (\texttt{site:dominio.com}) pero excluye los resultados del subdominio principal (\texttt{-www}), revelando paneles de administración, entornos de prueba, etc.
+    \item \texttt{site:ejemplo.com filetype:ini} o \texttt{site:ejemplo.com filetype:env}.
+    \item Un error \textbf{429} indica que Google ha limitado temporalmente las consultas (Rate Limit) por detectar tráfico automatizado. El código debe manejarlo capturando la excepción (ej. \texttt{try-except}) e interrumpiendo las consultas amigablemente o guardando los resultados obtenidos hasta el momento sin detener el programa principal.
+\end{enumerate}
+
+\subsection{Grupo 3: Descubrimiento de Hosts}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item Se envía un paquete \textbf{ICMP Type 8 (Echo Request)}. Si el host está vivo y no bloquea ICMP, se espera que responda con un paquete \textbf{ICMP Type 0 (Echo Reply)}.
+    \item Representa un bloque de \textbf{256 direcciones IP} en total (desde la \texttt{.0} hasta la \texttt{.255}), correspondientes a una red de Clase C (máscara de subred 255.255.255.0).
+    \item Se utiliza el \textbf{TCP SYN Ping}, enviando un paquete de intento de conexión (SYN) a un puerto comúnmente abierto (como 80 o 443) para observar la respuesta de la capa TCP.
+    \item El auditor concluye que \textbf{el host está "vivo"} (encendido y conectado), pero que ese puerto específico (el 80) está \textbf{cerrado} (o filtrado).
+    \item La librería \texttt{ipaddress} (específicamente la función \texttt{ipaddress.ip\_network()}).
+\end{enumerate}
+
+\subsection{Grupo 4: Escaneo de Puertos y Servicios}
+\begin{enumerate}[label=\textbf{\arabic*.}]
+    \item 1) El auditor envía un paquete \textbf{SYN}. 2) El servidor objetivo responde con \textbf{SYN-ACK} indicando que está abierto. 3) El auditor responde con \textbf{ACK}, completando la conexión (que luego cerrará).
+    \item Porque escanear de forma secuencial (uno por uno) los 65,535 puertos de un equipo tomaría demasiadas horas. La concurrencia permite lanzar múltiples conexiones de manera casi simultánea, reduciendo el tiempo drásticamente.
+    \item Si el puerto UDP está cerrado, el host objetivo normalmente responde con un paquete \textbf{ICMP Port Unreachable} (Tipo 3, Código 3).
+    \item Consiste en conectarse a un puerto abierto y leer el mensaje de bienvenida (texto/banner) que devuelve el servicio. Es fundamental porque revela el \textbf{nombre y versión del software} que corre en ese puerto, información crítica para buscar vulnerabilidades.
+    \item Puede significar que el puerto está \textbf{abierto} (el servicio recibió el paquete UDP pero al no entenderlo simplemente no respondió) o que está \textbf{filtrado} (un firewall absorbió el paquete antes de llegar o bloqueó la respuesta ICMP).
+\end{enumerate}
+
+\end{document}
