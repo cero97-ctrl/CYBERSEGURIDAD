@@ -1,0 +1,19 @@
+{
+  "run_id": "flujo-Juan_Alvares-2026-08-09T14-49-46",
+  "directive": "evaluar_examen_estudiante.yaml",
+  "estudiante": "Juan Alvares",
+  "pdf": "/home/cero/MEGA/VS_CODE_WORKSPACE/CYBERSEGURIDAD/examenes-teoricos/03/examen_estudiante/Juan_Alvares.pdf",
+  "started_at": "2026-08-09T14:49:46.308586+00:00",
+  "last_updated": "2026-08-09T14:50:38.366500+00:00",
+  "current_step": 0,
+  "steps_completed": [],
+  "steps_failed": [
+    {
+      "step": 1,
+      "script": "evaluar_examen.py",
+      "code": 2,
+      "message": "Error de API (APIStatusError): Error code: 402 - {'error': {'message': \"This request requires more credits, or fewer max_tokens. You requested up to 8192 tokens, but can only afford 3410. To increase, visit https://openrouter.ai/workspaces/default/keys/6bfec57f66e553c7ee8c2b56499fc65f32b8118baae98cedd6fc16fdef565f8b and adjust the key's monthly limit\", 'code': 402, 'metadata': {'limit_source': 'openrouter_credits', 'remedy_hint': 'Add credits at https://openrouter.ai/settings/credits, or lower max_tokens / prompt size to fit your remaining balance.', 'provider_name': None, 'previous_errors': [{'code': 402, 'message': \"This request requires more credits, or fewer max_tokens. You requested up to 8192 tokens, but can only afford 3410. To increase, visit https://openrouter.ai/workspaces/default/keys/6bfec57f66e553c7ee8c2b56499fc65f32b8118baae98cedd6fc16fdef565f8b and adjust the key's monthly limit\"}, {'code': 402, 'message': \"This request requires more credits, or fewer max_tokens. You requested up to 8192 tokens, but can only afford 3410. To increase, visit https://openrouter.ai/workspaces/default/keys/6bfec57f66e553c7ee8c2b56499fc65f32b8118baae98cedd6fc16fdef565f8b and adjust the key's monthly limit\"}, {'code': 402, 'message': \"This request requires more credits, or fewer max_tokens. You requested up to 8192 tokens, but can only afford 3410. To increase, visit https://openrouter.ai/workspaces/default/keys/6bfec57f66e553c7ee8c2b56499fc65f32b8118baae98cedd6fc16fdef565f8b and adjust the key's monthly limit\"}]}}, 'user_id': 'user_33YfQJkj4MPfKZGNV015FHjOwsY'}"
+    }
+  ],
+  "context": {}
+}

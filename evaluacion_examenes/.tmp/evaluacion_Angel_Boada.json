@@ -1,0 +1,85 @@
+{
+  "status": "ok",
+  "api_backend": "gemini",
+  "estudiante": "Angel Boada",
+  "archivo": "/home/cero/MEGA/VS_CODE_WORKSPACE/CYBERSEGURIDAD/examenes-teoricos/03/examen_estudiante/Angel_Boada.pdf",
+  "modelo": "gemini-2.5-flash",
+  "dpi_renderizado": 250,
+  "paginas_procesadas": 11,
+  "evaluacion": {
+    "puntaje_sugerido": "7.0/10",
+    "nivel_desempeno": "Bueno",
+    "resumen_general": "El estudiante demuestra una comprensión sólida de los conceptos fundamentales de web crawling, mapeo de directorios y evasión de controles de seguridad. Sus respuestas son coherentes y utilizan terminología técnica adecuada. Sin embargo, algunas explicaciones carecen de la profundidad esperada en el diseño de algoritmos o arquitecturas, y hay oportunidades para detallar más las estrategias de bypass y la gestión de datos.",
+    "fortalezas": [
+      "Buena comprensión de los desafíos del crawling moderno en SPAs.",
+      "Identificación correcta de la necesidad de ejecución de JavaScript y manipulación del DOM.",
+      "Conocimiento de herramientas como Playwright y Scrapy para crawling avanzado.",
+      "Entendimiento de las implicaciones de un código 403 y posibles vectores de ataque.",
+      "Identificación de mecanismos de evasión para WAF/IPS."
+    ],
+    "areas_de_mejora": [
+      "Mayor detalle en la arquitectura de algoritmos para manejo de falsos positivos.",
+      "Profundización en las estrategias de bypass y la automatización de vectores adicionales.",
+      "Claridad en el diseño de la estructura de datos para evitar bucles infinitos.",
+      "Mejor organización y legibilidad en algunas partes de las respuestas."
+    ],
+    "observaciones_por_pregunta": [
+      {
+        "pregunta": "Pregunta 1: Desafíos del Crawling Moderno",
+        "puntaje_parcial": "1.8/2.0",
+        "evaluacion": "El estudiante identifica correctamente los principales desafíos del crawling en SPAs: la dependencia del JavaScript para renderizar el contenido y la existencia de enlaces que no están directamente en el HTML inicial (DOM dinámico). Menciona la necesidad de ejecutar JS y la intercepción de APIs, lo cual es muy pertinente. Propone el uso de Playwright y una arquitectura híbrida con Scrapy, lo que demuestra conocimiento de herramientas y enfoques modernos. La respuesta es clara y bien estructurada.",
+        "errores": []
+      },
+      {
+        "pregunta": "Pregunta 2: Manejo de Falsos Positivos",
+        "puntaje_parcial": "1.2/2.0",
+        "evaluacion": "El estudiante reconoce la necesidad de un módulo de 'filtro de falsos positivos' y propone una arquitectura con fases de calibración, dispersión aleatoria y adaptación dinámica. Sin embargo, la explicación de cómo funcionaría cada fase es muy superficial. No detalla los criterios heurísticos o las métricas que se usarían para diferenciar un 'soft 404' de un directorio real. La idea de adaptación dinámica es buena, pero le falta concreción técnica.",
+        "errores": [
+          "Falta de detalle en la implementación de las fases del algoritmo.",
+          "No especifica los criterios heurísticos para diferenciar un 'soft 404'."
+        ]
+      },
+      {
+        "pregunta": "Pregunta 3: Análisis de Respuestas 403",
+        "puntaje_parcial": "1.5/2.0",
+        "evaluacion": "El estudiante interpreta correctamente que un 403 sistemático indica una restricción de acceso. Identifica la existencia implícita de recursos y la posibilidad de listar directorios. Propone técnicas como fuzzing, manipulación de cabeceras proxy, normalización de rutas y bypass de WAF/proxy inverso, lo cual es muy acertado. La respuesta es sólida en la identificación de vectores y técnicas.",
+        "errores": [
+          "Podría haber detallado más cómo se automatizarían algunos de los vectores mencionados."
+        ]
+      },
+      {
+        "pregunta": "Pregunta 4: Evasión y Sigilo",
+        "puntaje_parcial": "1.5/2.0",
+        "evaluacion": "El estudiante identifica el objetivo de romper los patrones que WAF/IPS utilizan para detectar herramientas automatizadas. Menciona el control del ritmo de tráfico, la rotación y simetría de firmas HTTP, la simulación de comportamiento humano y la postración de origen en la capa de red. Estas son estrategias válidas y demuestran un buen entendimiento de las técnicas de evasión. La respuesta es concisa y al punto.",
+        "errores": [
+          "La 'postración de origen en la capa de red' es un término poco común y podría ser más claro (ej. rotación de IPs, uso de proxies/VPNs)."
+        ]
+      },
+      {
+        "pregunta": "Pregunta 5: Modelado de Datos Estructurados",
+        "puntaje_parcial": "1.0/2.0",
+        "evaluacion": "El estudiante sugiere usar una estructura de árbol para representar directorios y archivos, lo cual es una buena base. También menciona la necesidad de revisar la estructura de almacenamiento del mecanismo de control de ciclos para evitar bucles infinitos. Sin embargo, la respuesta es muy breve y carece de detalles sobre cómo se implementaría esta estructura de árbol (ej. qué metadatos se almacenarían, cómo se manejarían las relaciones, cómo se detectaría y evitaría un bucle en la práctica dentro de la estructura de datos).",
+        "errores": [
+          "Falta de detalle en el diseño de la estructura de datos (ej. nodos, atributos, algoritmos de detección de ciclos).",
+          "No especifica cómo el 'mecanismo de control de ciclos' interactuaría con la estructura de árbol."
+        ]
+      }
+    ],
+    "errores_conceptuales": [
+      "En la pregunta 2, la explicación del algoritmo para manejo de falsos positivos es conceptualmente correcta en sus fases, pero carece de la profundidad técnica esperada para un diseño de algoritmo.",
+      "En la pregunta 4, el término 'postración de origen en la capa de red' es ambiguo y podría indicar una falta de precisión en la terminología estándar para técnicas de evasión de red."
+    ],
+    "errores_procedimentales": [
+      "En la pregunta 2, el diseño procedimental del algoritmo para falsos positivos es muy abstracto y no presenta pasos concretos o heurísticas claras.",
+      "En la pregunta 5, la propuesta de estructura de datos es correcta a nivel conceptual (árbol), pero no se detalla cómo se implementaría o cómo se integrarían los mecanismos de detección de bucles."
+    ],
+    "recomendaciones_al_estudiante": "Has demostrado un buen entendimiento de los conceptos clave en seguridad ofensiva, especialmente en crawling y evasión. Para mejorar, te sugiero profundizar en el diseño técnico de tus soluciones. Cuando propongas un algoritmo o una arquitectura, intenta detallar los pasos, las estructuras de datos involucradas y los criterios específicos que utilizarías. Por ejemplo, en el manejo de falsos positivos, ¿qué métricas usarías para decidir si una página es un 'soft 404'? En el modelado de datos, ¿cómo representarías un nodo en tu árbol y qué atributos tendría? Practicar la especificación técnica te ayudará a construir soluciones más robustas y a comunicar tus ideas con mayor precisión.",
+    "nota_para_el_profesor": "El estudiante tiene una base sólida y un buen razonamiento. Las áreas de mejora se centran en la profundidad y el detalle técnico de las soluciones propuestas, más que en errores conceptuales graves. La pregunta 2 y 5 son las que requieren mayor desarrollo en la respuesta del estudiante. La legibilidad es aceptable, aunque en algunas partes la escritura es un poco apretada."
+  },
+  "timestamp": "2026-08-09T14:44:52.164628Z",
+  "tokens_usados": {
+    "prompt": 4037,
+    "respuesta": 1696,
+    "total": 5733
+  }
+}

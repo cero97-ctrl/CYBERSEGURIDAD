@@ -7,6 +7,7 @@ __pycache__/
 *$py.class
 .venv/
 env/
+.env
 
 # LaTeX (Archivos auxiliares de compilación)
 *.aux

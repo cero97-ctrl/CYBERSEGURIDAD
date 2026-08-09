@@ -1,0 +1,88 @@
+{
+  "status": "ok",
+  "api_backend": "gemini",
+  "estudiante": "Edser Tovar",
+  "archivo": "/home/cero/MEGA/VS_CODE_WORKSPACE/CYBERSEGURIDAD/examenes-teoricos/03/examen_estudiante/Edser_Tovar.pdf",
+  "modelo": "gemini-2.5-flash",
+  "dpi_renderizado": 250,
+  "paginas_procesadas": 5,
+  "evaluacion": {
+    "puntaje_sugerido": "7.8/10",
+    "nivel_desempeno": "Bueno",
+    "resumen_general": "El estudiante demuestra un buen entendimiento de los conceptos de crawling moderno, manejo de errores HTTP y evasión de controles de seguridad. Sus respuestas son generalmente claras y bien estructuradas, utilizando terminología técnica adecuada. Sin embargo, se observan algunas imprecisiones conceptuales y procedimentales menores, especialmente en la justificación de ciertas técnicas y la profundidad de la explicación en algunos puntos.",
+    "fortalezas": [
+      "Comprensión sólida de los desafíos del crawling en SPAs y la necesidad de ejecución de JavaScript.",
+      "Buen manejo de la respuesta a errores HTTP 403 y la importancia del HTTP Verb Tampering.",
+      "Conocimiento de técnicas avanzadas de evasión y sigilo para crawlers, como jitter, rotación de user-agent y falsificación de cabeceras.",
+      "Propuesta de una estructura de datos coherente para el árbol de directorios y archivos."
+    ],
+    "areas_de_mejora": [
+      "Mayor profundidad en la explicación de la justificación técnica de algunas estrategias.",
+      "Clarificación de la relación entre el 'motor de JavaScript' y el 'código fuente inicial' en SPAs.",
+      "Detalle más preciso sobre cómo el 'HTTP Verb Tampering' sortea los controles de seguridad.",
+      "Mejor justificación de la elección de 'hash del cuerpo' para la detección de contenido repetido."
+    ],
+    "observaciones_por_pregunta": [
+      {
+        "pregunta": "Pregunta 1: Desafíos del Crawling Moderno",
+        "puntaje_parcial": "1.8/2.0",
+        "evaluacion": "La respuesta es muy buena. El estudiante identifica correctamente la naturaleza dinámica de las SPAs y la necesidad de ejecutar JavaScript para cargar el contenido. Menciona el uso de peticiones XHR y fetch, y la importancia de un 'motor de JavaScript' en el navegador. La idea de que el código fuente inicial no contiene todo el contenido es acertada. Sin embargo, la frase 'el motor de JavaScript se ejecute en el navegador' podría ser más precisa, indicando que el crawler debe emular un navegador o tener un motor JS integrado para renderizar el contenido. La mención de 'peticiones HTTP estándar' es un poco ambigua, ya que las peticiones XHR/fetch son HTTP, pero la clave es que son asíncronas y cargan contenido dinámicamente.",
+        "errores": [
+          "Ambigüedad en la frase 'el motor de JavaScript se ejecute en el navegador' en el contexto de un crawler.",
+          "La mención de 'peticiones HTTP estándar' podría ser más específica sobre la naturaleza asíncrona de XHR/fetch."
+        ]
+      },
+      {
+        "pregunta": "Pregunta 2: Manejo de Falsos Positivos (404/403)",
+        "puntaje_parcial": "1.7/2.0",
+        "evaluacion": "La respuesta aborda correctamente la problemática de los falsos positivos en la detección de directorios. La idea de generar una línea base de errores 404 y comparar la respuesta con un URL aleatorio inexistente es un buen enfoque. La sugerencia de usar la respuesta para diferenciar dinámicamente la línea base es pertinente. Sin embargo, la justificación de 'no contiene los keywords de error' es un poco simplista; sería mejor hablar de la estructura o el contenido general de la página de error. La propuesta de 'creación de perfiles de servidor basados en el encabezado HTTP server' es interesante, pero la conexión con la heurística de peticiones y el mecanismo de backoff no está completamente desarrollada en este punto.",
+        "errores": [
+          "Justificación simplista para la diferenciación de errores ('no contiene los keywords de error').",
+          "La conexión entre 'perfiles de servidor' y 'heurística de peticiones/backoff' no está completamente explicada."
+        ]
+      },
+      {
+        "pregunta": "Pregunta 3: Análisis de respuestas 403 (Forbidden)",
+        "puntaje_parcial": "1.9/2.0",
+        "evaluacion": "La respuesta es muy buena y directa. El estudiante identifica correctamente el 'HTTP Verb Tampering' como una técnica para sortear los controles de seguridad ante un 403 Forbidden. La lista de métodos HTTP a probar (Head, Post, Put, Delete, Patch, Options) es exhaustiva y adecuada. La idea de que un 403 consistente confirma la existencia del recurso pero deniega el acceso es un buen punto de partida para esta técnica. La automatización de este modelo es clave.",
+        "errores": [
+          "Ninguno significativo."
+        ]
+      },
+      {
+        "pregunta": "Pregunta 4: Evasión y Sigilo",
+        "puntaje_parcial": "1.8/2.0",
+        "evaluacion": "La respuesta es excelente en cuanto a la enumeración de técnicas. El estudiante propone 'Jitter y Throttling Avanzado' con retrasos aleatorios y gaussianos, 'Rotación de user-agent' con una librería y alternancia de navegadores, 'Falsificación de cabeceras de HTTP de contexto' con valores realistas y orden aleatorio, y 'Fragmentación y Retardo en el envío' a bajo nivel de socket. También menciona la 'Variación de tamaño de solicitud'. Estas son técnicas avanzadas y pertinentes para evadir IPS/WAF. La explicación es clara y concisa para cada punto.",
+        "errores": [
+          "Ninguno significativo."
+        ]
+      },
+      {
+        "pregunta": "Pregunta 5: Modelado de Datos Estructurados",
+        "puntaje_parcial": "0.6/2.0",
+        "evaluacion": "La respuesta a la pregunta 5 es parcial. El estudiante propone una estructura de datos en Python (Class Node) que incluye atributos relevantes como url, status_code, depth, hash_content y children. También define un 'url_set' y 'url_tree_map'. Sin embargo, la respuesta solo aborda la estructura de datos y no las 'trampas de araña' ni los mecanismos para evitarlas, que son una parte crucial de la pregunta. Los puntos 1 a 5 que se mencionan en la página 3 parecen ser parte de la respuesta a esta pregunta, pero no están completamente desarrollados o justificados en relación con la estructura de datos propuesta. Por ejemplo, la 'normalización de URLs' es un buen punto, pero no se explica cómo se integra con la estructura. La 'detección de contenido repetido' mediante 'hash del cuerpo' es una buena idea, pero no se justifica por qué el hash del cuerpo es mejor que otros métodos (ej. hash de la URL + contenido, o detección de patrones).",
+        "errores": [
+          "Respuesta incompleta, no aborda completamente la prevención de 'trampas de araña' o 'spider traps'.",
+          "Falta de justificación para la elección de 'hash del cuerpo' para la detección de contenido repetido.",
+          "Los puntos 1 a 5 en la página 3 no están completamente integrados o explicados en el contexto de la estructura de datos o la prevención de trampas."
+        ]
+      }
+    ],
+    "errores_conceptuales": [
+      "La explicación de cómo el 'motor de JavaScript' se integra en el crawler para SPAs podría ser más precisa, diferenciando entre la emulación de un navegador y la ejecución de JS en el propio crawler.",
+      "La justificación de la detección de falsos positivos en 404 podría ser más robusta que solo 'no contiene los keywords de error'.",
+      "La relación entre los 'perfiles de servidor' y la 'heurística de peticiones/backoff' en la pregunta 2 no está completamente desarrollada."
+    ],
+    "errores_procedimentales": [
+      "La respuesta a la pregunta 5 es incompleta, ya que solo aborda la estructura de datos y no los mecanismos para evitar bucles infinitos o 'trampas de araña' de manera detallada, que era un requisito clave de la pregunta."
+    ],
+    "recomendaciones_al_estudiante": "Tu examen demuestra un buen nivel de comprensión en Seguridad Informática, especialmente en técnicas de crawling avanzado y evasión. Para mejorar, te sugiero profundizar en la justificación técnica de tus propuestas, explicando no solo 'qué' hacer, sino 'por qué' es la mejor aproximación y 'cómo' se implementaría con mayor detalle. Presta especial atención a los requisitos de las preguntas, asegurándote de cubrir todos los aspectos solicitados, como en la pregunta sobre 'trampas de araña'. Continúa practicando la integración de conceptos teóricos con diseños procedimentales sólidos.",
+    "nota_para_el_profesor": "El estudiante muestra un desempeño sólido en las preguntas 1, 3 y 4. La pregunta 2 tiene una buena base pero le falta un poco de desarrollo en la justificación. La pregunta 5 es la más débil, ya que solo aborda la estructura de datos y no los mecanismos de prevención de 'spider traps' de manera exhaustiva, lo que reduce significativamente su puntaje. Considerar si la estructura de datos por sí sola merece más crédito, pero la parte de 'evitar bucles infinitos' es crucial y no está bien cubierta."
+  },
+  "timestamp": "2026-08-09T14:46:32.727021Z",
+  "tokens_usados": {
+    "prompt": 2428,
+    "respuesta": 2112,
+    "total": 4540
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "carpeta": "examenes-teoricos/03/examen_estudiante",
+  "informes": "examenes-teoricos/03/informe_examen",
+  "total_estudiantes": 10,
+  "puntajes": [
+    {
+      "estudiante": "Ricardo Rivero",
+      "puntaje_sugerido": "8.0/10",
+      "nivel_desempeno": "Bueno"
+    },
+    {
+      "estudiante": "Andres Maldonado",
+      "puntaje_sugerido": "7.8/10",
+      "nivel_desempeno": "Bueno"
+    },
+    {
+      "estudiante": "Edser Tovar",
+      "puntaje_sugerido": "7.8/10",
+      "nivel_desempeno": "Bueno"
+    },
+    {
+      "estudiante": "Daniel Albadawi",
+      "puntaje_sugerido": "7.5/10",
+      "nivel_desempeno": "Bueno"
+    },
+    {
+      "estudiante": "Jesmary Rodriguez",
+      "puntaje_sugerido": "7.5/10",
+      "nivel_desempeno": "Bueno"
+    },
+    {
+      "estudiante": "Reinaldo Caraballo",
+      "puntaje_sugerido": "7.5/10",
+      "nivel_desempeno": "Bueno"
+    },
+    {
+      "estudiante": "Jeanpiere Mendoza",
+      "puntaje_sugerido": "7.2/10",
+      "nivel_desempeno": "Bueno"
+    },
+    {
+      "estudiante": "Angel Boada",
+      "puntaje_sugerido": "7.0/10",
+      "nivel_desempeno": "Bueno"
+    },
+    {
+      "estudiante": "Cesar Leon",
+      "puntaje_sugerido": "6.5/10",
+      "nivel_desempeno": "Bueno"
+    },
+    {
+      "estudiante": "Juan Alvares",
+      "puntaje_sugerido": "6.5/10",
+      "nivel_desempeno": "Bueno"
+    }
+  ],
+  "generado": "2026-08-09T14:55:09.002018+00:00"
+}

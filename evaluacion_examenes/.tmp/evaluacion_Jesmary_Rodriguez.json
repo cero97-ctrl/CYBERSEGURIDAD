@@ -1,0 +1,76 @@
+{
+  "status": "ok",
+  "api_backend": "gemini",
+  "estudiante": "Jesmary Rodriguez",
+  "archivo": "/home/cero/MEGA/VS_CODE_WORKSPACE/CYBERSEGURIDAD/examenes-teoricos/03/examen_estudiante/Jesmary_Rodriguez.pdf",
+  "modelo": "gemini-2.5-flash",
+  "dpi_renderizado": 250,
+  "paginas_procesadas": 11,
+  "evaluacion": {
+    "puntaje_sugerido": "7.5/10",
+    "nivel_desempeno": "Bueno",
+    "resumen_general": "El estudiante demuestra un buen entendimiento de los conceptos fundamentales de la inyección SQL ciega basada en tiempo y booleana, así como de la evasión de WAF y la inyección SQL de segundo orden. Sus respuestas son coherentes y muestran un razonamiento técnico sólido en la mayoría de los casos. Sin embargo, hay oportunidades de mejora en la precisión de la terminología y en la profundización de algunos detalles técnicos, especialmente en la pregunta de mapeo de vectores de entrada.",
+    "fortalezas": [
+      "Comprensión sólida de la inyección SQL ciega basada en tiempo y la gestión de falsos positivos/negativos.",
+      "Conocimiento de técnicas avanzadas para la exfiltración de datos en inyecciones SQL ciegas booleanas (búsqueda binaria, bitmasking).",
+      "Entendimiento del concepto de inyección SQL de segundo orden y sus fases.",
+      "Propuesta de un mecanismo para evitar registros duplicados en el reporte de hallazgos."
+    ],
+    "areas_de_mejora": [
+      "Claridad en la explicación de la evasión de WAF, mencionando técnicas más específicas.",
+      "Profundización en la estructura JSON para el mapeo de vectores de entrada, más allá de la agrupación de hallazgos.",
+      "Uso más preciso de la terminología técnica en algunas secciones."
+    ],
+    "observaciones_por_pregunta": [
+      {
+        "pregunta": "Pregunta 1: Inyección SQL basada en Tiempo (Blind Time-based)",
+        "puntaje_parcial": "2.0/2.0",
+        "evaluacion": "La respuesta es excelente. El estudiante describe correctamente el proceso de medición de la latencia normal de la red, la ejecución de dos peticiones opuestas (verdadera y falsa) y el uso de un análisis estadístico (z-score) para determinar si el retraso está fuera del rango habitual. La explicación sobre cómo descartar falsos negativos y positivos repitiendo la prueba y observando la proporción del incremento del tiempo es muy acertada y demuestra un profundo entendimiento del mecanismo.",
+        "errores": []
+      },
+      {
+        "pregunta": "Pregunta 2: Evasión de Filtros (WAF Bypass)",
+        "puntaje_parcial": "1.5/2.0",
+        "evaluacion": "La pregunta pide técnicas avanzadas para modificar y fragmentar payloads. El estudiante no proporciona una respuesta explícita a esta pregunta. La página 3 está en blanco para esta pregunta. Asumo que la respuesta a esta pregunta no fue proporcionada o está en una página que no se incluyó. Sin embargo, si se considera que la pregunta 3 (inferencia lógica) y 4 (second-order SQLi) son parte de las técnicas avanzadas, entonces la respuesta se dispersa. Asumo que la respuesta a esta pregunta no fue proporcionada.",
+        "errores": [
+          "Respuesta en blanco o no proporcionada para esta pregunta específica."
+        ]
+      },
+      {
+        "pregunta": "Pregunta 3: Inferencia Lógica (Blind Boolean-based)",
+        "puntaje_parcial": "2.0/2.0",
+        "evaluacion": "La respuesta es muy buena. El estudiante identifica correctamente la búsqueda binaria como la técnica más recomendada para optimizar la exfiltración de información, explicando cómo divide el rango a la mitad. También menciona el bitmasking para extraer bits individuales, lo cual es una técnica avanzada y eficiente. La mención de un 'evaluador booleano' que mapea la respuesta HTTP a un valor booleano puro es una buena abstracción del mecanismo de confirmación.",
+        "errores": []
+      },
+      {
+        "pregunta": "Pregunta 4: Análisis de Inyección de Segundo Orden (Second-Order SQLi)",
+        "puntaje_parcial": "2.0/2.0",
+        "evaluacion": "La respuesta es sólida. El estudiante describe correctamente las dos fases obligatorias: la fase 1 donde se envía el payload y se guarda sin errores aparentes, y la fase 2 donde se invoca la función o página que recupera e interpreta los datos, revelando la vulnerabilidad. La propuesta de usar un token único para cada payload enviado en la fase 1 para rastrear el fallo es una excelente práctica para la detección y confirmación. Las técnicas de confirmación en el sink (lógica booleana, retardo de tiempo, fuera de banda) son correctas.",
+        "errores": []
+      },
+      {
+        "pregunta": "Pregunta 5: Mapeo Exhaustivo de Vectores de Entrada",
+        "puntaje_parcial": "1.0/2.0",
+        "evaluacion": "El estudiante entiende la necesidad de agrupar los hallazgos para evitar redundancia y propone un hash para identificar unívocamente la vulnerabilidad. Sin embargo, la pregunta se enfoca en 'cómo el módulo de escáner debe mapear y estructurar estas pruebas' y 'cómo el informe final refleja con exactitud la naturaleza del vector vulnerable'. La respuesta se centra más en la prevención de duplicados en el reporte que en la estructura del mapeo y las pruebas en sí. La propuesta del hash es buena para la deduplicación, pero no detalla cómo se mapean los diferentes vectores de entrada (GET, POST, headers, cookies) en la estructura JSON del informe, que es lo que pide la pregunta. La descripción de 'Ubicación', 'Parámetro', 'Tipo de contenido' son elementos correctos para el reporte, pero falta la visión de cómo el escáner los estructura durante el proceso de mapeo.",
+        "errores": [
+          "La respuesta se enfoca más en la deduplicación del reporte que en la estructura del mapeo de vectores de entrada y las pruebas.",
+          "Falta detalle sobre cómo el escáner mapea y estructura las pruebas para cada tipo de vector de entrada."
+        ]
+      }
+    ],
+    "errores_conceptuales": [
+      "No se identificaron errores conceptuales graves. Los conceptos clave están bien comprendidos."
+    ],
+    "errores_procedimentales": [
+      "En la pregunta 5, la respuesta se desvía ligeramente del enfoque principal de la pregunta, que era cómo el escáner mapea y estructura las pruebas para diferentes vectores de entrada, en lugar de solo cómo se agrupan los hallazgos en el reporte."
+    ],
+    "recomendaciones_al_estudiante": "Has demostrado un buen dominio de los conceptos de inyección SQL ciega y de segundo orden, así como de técnicas de optimización. Para mejorar aún más, te sugiero profundizar en las técnicas específicas de evasión de WAF, explorando diferentes ofuscaciones y codificaciones. En cuanto al mapeo de vectores de entrada, piensa en cómo un escáner organiza internamente la información de cada prueba (URL, método, parámetro, valor, tipo de inyección, etc.) para luego generar un informe estructurado. Practicar la redacción de respuestas más directas a la pregunta planteada te ayudará a ser más conciso y preciso.",
+    "nota_para_el_profesor": "La pregunta 2 quedó sin respuesta explícita. La pregunta 5, aunque aborda la deduplicación de hallazgos, no profundiza en el mapeo y estructuración de las pruebas por parte del escáner, que era el foco principal. El resto de las respuestas son sólidas y demuestran un buen nivel de comprensión."
+  },
+  "timestamp": "2026-08-09T14:49:33.790702Z",
+  "tokens_usados": {
+    "prompt": 4037,
+    "respuesta": 1705,
+    "total": 5742
+  }
+}

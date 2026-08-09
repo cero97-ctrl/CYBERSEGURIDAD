@@ -1,0 +1,89 @@
+{
+  "status": "ok",
+  "api_backend": "gemini",
+  "estudiante": "Jeanpiere Mendoza",
+  "archivo": "/home/cero/MEGA/VS_CODE_WORKSPACE/CYBERSEGURIDAD/examenes-teoricos/03/examen_estudiante/Jeanpiere_Mendoza.pdf",
+  "modelo": "gemini-2.5-flash",
+  "dpi_renderizado": 250,
+  "paginas_procesadas": 7,
+  "evaluacion": {
+    "puntaje_sugerido": "7.2/10",
+    "nivel_desempeno": "Bueno",
+    "resumen_general": "El estudiante demuestra una comprensión sólida de los conceptos fundamentales de seguridad ofensiva, especialmente en el ámbito de web crawling y evasión. Sus respuestas son, en su mayoría, coherentes y utilizan terminología técnica adecuada. Sin embargo, hay áreas donde la profundidad técnica o la precisión procedimental podrían mejorarse, y algunos errores conceptuales menores que impactan la robustez de las soluciones propuestas.",
+    "fortalezas": [
+      "Buena comprensión de los desafíos del crawling moderno y la necesidad de headless browsers.",
+      "Conocimiento de técnicas de evasión como la rotación de User-Agent y la fragmentación.",
+      "Capacidad para identificar vectores de ataque a partir de respuestas HTTP no estándar.",
+      "Propuesta de una estructura de datos razonable para el modelado de directorios."
+    ],
+    "areas_de_mejora": [
+      "Profundizar en la justificación técnica de algunas soluciones (ej. por qué un hash es mejor que un simple conteo).",
+      "Mejorar la claridad y completitud en la descripción de algunos mecanismos de evasión.",
+      "Refinar la comprensión de la relación entre el status code 403 y los mecanismos de control de acceso.",
+      "Detallar más los mecanismos de detección de contenido repetido en el modelado de datos."
+    ],
+    "observaciones_por_pregunta": [
+      {
+        "pregunta": "1. Desafíos del Crawling Moderno",
+        "puntaje_parcial": "1.8/2.0",
+        "evaluacion": "El estudiante identifica correctamente el problema principal de las SPA y el uso de JavaScript para cargar contenido. La solución de usar 'Headless Browsers' como Playwright es acertada y demuestra conocimiento de herramientas modernas. La mención de Ajax y Fetch es relevante. La respuesta es concisa y al punto.",
+        "errores": []
+      },
+      {
+        "pregunta": "2. Manejo de Falsos Positivos (404/403)",
+        "puntaje_parcial": "1.5/2.0",
+        "evaluacion": "El estudiante propone generar una línea base de URLs y usar fuerza bruta, lo cual es un enfoque válido. La idea de calcular hashes (MD5/SHA1) para identificar contenido único es buena, aunque la justificación de 'longitud en bytes' como medida de unicidad es menos robusta. La mención de 'keywords' en la cabecera HTTP es interesante, pero no se explica cómo se usaría para deducir la naturaleza del error. La respuesta a la pregunta de 'qué vector adicional podrías automatizar' es un poco vaga, enfocándose más en la detección que en la explotación del vector.",
+        "errores": [
+          "La justificación de 'longitud en bytes' para identificar contenido único es débil frente a un hash criptográfico.",
+          "La explicación de cómo usar 'keywords' en la cabecera HTTP para deducir la naturaleza del error es incompleta.",
+          "No se detalla un 'vector adicional' claro para automatizar la explotación, más allá de la detección."
+        ]
+      },
+      {
+        "pregunta": "3. Análisis de Respuestas 403",
+        "puntaje_parcial": "1.7/2.0",
+        "evaluacion": "El estudiante identifica correctamente que un 403 indica que el recurso existe pero el acceso está denegado. Propone varias razones válidas: ACLs basadas en IP, filtrado a nivel de aplicación/WAF, y restricciones de método HTTP. La idea de 'Security-by-Obscurity' y la enumeración de rutas como /admin o /config es pertinente. La mención de 'Spoofing de IP' como vector para evadir controles basados en IP es correcta. Sin embargo, la relación entre el 403 y la identificación de la solicitud como 'maliciosa' por un WAF es una inferencia, no una causa directa del 403 en todos los casos, aunque es un buen punto de análisis.",
+        "errores": [
+          "La conexión directa entre un 403 y la identificación de la solicitud como 'maliciosa' por un WAF es una posible causa, pero no la única ni la más directa en todos los escenarios de 403."
+        ]
+      },
+      {
+        "pregunta": "4. Evasión y Sigilo",
+        "puntaje_parcial": "1.5/2.0",
+        "evaluacion": "El estudiante propone la rotación de User-Agent usando una librería 'fake-useragent', lo cual es una técnica estándar y efectiva. La fragmentación y el retardo en el envío de solicitudes para evitar la detección de patrones maliciosos es una buena idea, aunque la explicación de 'variación de tamaño de solicitud' y 'alterar el orden de los parámetros de la URL' es un poco ambigua y no se justifica completamente cómo esto evade la detección. El 'jitter y throttling avanzado' con distribución gaussiana es una técnica sofisticada y bien pensada para simular tráfico humano.",
+        "errores": [
+          "La explicación de 'variación de tamaño de solicitud' y 'alterar el orden de los parámetros de la URL' como mecanismos de evasión es poco detallada y su efectividad no está completamente justificada en el contexto de WAF bypass.",
+          "Falta un poco de detalle sobre cómo la fragmentación de la solicitud en sí misma (más allá del retardo) ayuda a evadir."
+        ]
+      },
+      {
+        "pregunta": "5. Modelado de Datos Estructurados",
+        "puntaje_parcial": "0.7/2.0",
+        "evaluacion": "El estudiante propone una clase `Node` con atributos relevantes como `url`, `status`, `depth`, `children`, y `content_hash`. El uso de `content_hash` es una buena idea para detectar contenido repetido. Sin embargo, la implementación de `url_tree_map` como un diccionario global no es ideal para representar un grafo de navegación y puede llevar a problemas de concurrencia o gestión de memoria en un crawler complejo. Las 'trampas de araña' no se abordan explícitamente en la estructura propuesta, más allá de la profundidad máxima. La 'normalización de URLs' es un buen punto, pero no se integra en el modelo de datos de forma clara. La 'detección de contenido repetido' se menciona, pero no se detalla cómo se implementaría con el `content_hash` más allá de su existencia.",
+        "errores": [
+          "El uso de `url_tree_map` como un diccionario global para representar el árbol de navegación es una simplificación excesiva y no es la forma más robusta de manejar un grafo de navegación en memoria, especialmente para evitar bucles infinitos.",
+          "La solución para 'trampas de araña' se limita a `max_depth`, sin considerar otros mecanismos como la detección de patrones de URL repetitivos o ciclos en el grafo.",
+          "La 'detección de contenido repetido' se menciona, pero no se explica cómo se usaría el `content_hash` para evitar el procesamiento o almacenamiento duplicado de contenido.",
+          "La 'normalización de URLs' se menciona, pero no se integra explícita o implícitamente en la estructura de datos o en el proceso de adición de nodos."
+        ]
+      }
+    ],
+    "errores_conceptuales": [
+      "La justificación de la unicidad del contenido basada en 'longitud en bytes' es menos precisa que el uso de hashes criptográficos, lo que denota una comprensión superficial de la robustez de la identificación de contenido.",
+      "La relación entre un código 403 y la identificación de una solicitud como 'maliciosa' por un WAF es una inferencia, no una causa directa en todos los casos, lo que puede llevar a un entendimiento incompleto de los motivos de un 403."
+    ],
+    "errores_procedimentales": [
+      "La propuesta de `url_tree_map` como un diccionario global para el modelado de datos no es la forma más adecuada para representar un grafo de navegación y gestionar la memoria de manera eficiente en un crawler a gran escala.",
+      "Las explicaciones de algunos mecanismos de evasión (variación de tamaño de solicitud, orden de parámetros) carecen de la profundidad técnica necesaria para justificar su efectividad.",
+      "La solución para 'trampas de araña' se limita a la profundidad máxima, sin considerar otros mecanismos más sofisticados para la detección de ciclos o patrones de URL repetitivos."
+    ],
+    "recomendaciones_al_estudiante": "Tu examen demuestra un buen entendimiento de los principios de seguridad ofensiva y las herramientas modernas. Te animo a profundizar en la justificación técnica de tus soluciones, especialmente cuando propones mecanismos de evasión o detección. Considera cómo tus diseños se escalarían y cómo manejarían casos extremos o complejos. Para el modelado de datos, explora estructuras de grafos más robustas que puedan manejar mejor las relaciones complejas y evitar bucles infinitos de manera más eficiente. Sigue practicando la articulación clara y detallada de tus argumentos técnicos.",
+    "nota_para_el_profesor": "El estudiante muestra un nivel de comprensión adecuado para la materia. Las áreas de mejora se centran en la profundidad de la justificación técnica y la robustez de las soluciones arquitectónicas, más que en errores conceptuales graves. La pregunta 5 sobre modelado de datos es la que presenta más debilidades en la propuesta de diseño. Sugiero reforzar los conceptos de estructuras de datos para grafos y algoritmos de detección de ciclos en el contexto de crawlers."
+  },
+  "timestamp": "2026-08-09T14:47:40.931680Z",
+  "tokens_usados": {
+    "prompt": 2960,
+    "respuesta": 2172,
+    "total": 5132
+  }
+}
