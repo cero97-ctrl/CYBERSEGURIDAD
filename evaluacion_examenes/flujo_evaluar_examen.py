@@ -107,6 +107,7 @@ def evaluacion_ok(code: int, resultado: dict | str) -> bool:
 DEFAULT_MODELO = {
     "gemini":     "gemini-2.5-flash",
     "openrouter": "google/gemini-2.5-flash",
+    "huggingface": "Qwen/Qwen2.5-VL-72B-Instruct",
 }
 
 
@@ -124,6 +125,12 @@ def _modelo_para_backend(backend: str, modelo: str | None) -> str:
         if modelo.startswith("gemini"):
             return "google/" + modelo
         return DEFAULT_MODELO["openrouter"]
+    if backend == "huggingface":
+        if "/" in modelo and not modelo.startswith("models/"):
+            return modelo
+        if modelo.startswith("gemini"):
+            return "Qwen/Qwen2.5-VL-72B-Instruct"
+        return DEFAULT_MODELO["huggingface"]
     return modelo
 
 
@@ -196,15 +203,18 @@ def flujo_completo(
     code, evaluacion = run_script(cmd_evaluar, capture_json=True)
 
     if not evaluacion_ok(code, evaluacion):
-        if api_backend == "groq":
-            print_err("Falló Groq. Intentando como respaldo automático con Gemini...")
-            cmd_fallback = _cambiar_backend(cmd_evaluar, "gemini")
-            code, evaluacion = run_script(cmd_fallback, capture_json=True)
+        # Cadena de respaldo: huggingface → gemini → openrouter
+        # (se omite el backend original, que ya falló).
+        fallbacks = [b for b in ["huggingface", "gemini", "openrouter"]
+                     if b != api_backend]
 
-        if not evaluacion_ok(code, evaluacion):
-            print_err("Falló el respaldo. Intentando como último recurso con OpenRouter...")
-            cmd_fallback = _cambiar_backend(cmd_evaluar, "openrouter")
+        for fb in fallbacks:
+            print_err(f"Falló {api_backend}. Intentando como respaldo automático con {fb}...")
+            cmd_fallback = _cambiar_backend(cmd_evaluar, fb)
             code, evaluacion = run_script(cmd_fallback, capture_json=True)
+            if evaluacion_ok(code, evaluacion):
+                api_backend = fb
+                break
 
         if not evaluacion_ok(code, evaluacion):
             msg = (evaluacion.get("message", evaluacion.get("raw_output", "Error desconocido"))
@@ -350,6 +360,7 @@ Ejemplos:
   python3 flujo_evaluar_examen.py --pdf examenes/01/examen_estudiantes/Ana_Alcala.pdf
   python3 flujo_evaluar_examen.py --pdf examenes/02/examen_estudiantes/Juan_Perez.pdf --modelo gemini-1.5-pro
   python3 flujo_evaluar_examen.py --pdf <ruta> --dpi 300 --output-dir informes/
+  python3 flujo_evaluar_examen.py --pdf <ruta> --api-backend huggingface --modelo Qwen/Qwen2.5-VL-72B-Instruct:cheapest
         """,
     )
     parser.add_argument("--pdf", required=True,
@@ -357,8 +368,8 @@ Ejemplos:
     parser.add_argument("--modelo", default="gemini-2.5-flash",
                         help="Modelo a usar (default: gemini-2.5-flash).")
     parser.add_argument("--api-backend", default="gemini",
-                        choices=["gemini", "openrouter", "groq"],
-                        help="Backend de API: gemini, openrouter o groq. (default: gemini).")
+                        choices=["gemini", "openrouter", "groq", "huggingface"],
+                        help="Backend de API: gemini, openrouter, groq o huggingface. (default: gemini).")
     parser.add_argument("--dpi", type=int, default=250,
                         help="DPI de renderizado del PDF (default: 250).")
     parser.add_argument("--rubrica", default=None,

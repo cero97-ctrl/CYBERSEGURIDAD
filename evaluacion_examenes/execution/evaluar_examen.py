@@ -3,12 +3,13 @@
 evaluar_examen.py — Evaluación preliminar de exámenes con LLM multimodal (Layer 3: Execution)
 
 Lee un PDF de examen de estudiante, renderiza cada página como imagen de alta resolución
-en memoria y se las envía en bloque a un modelo multimodal (Gemini o OpenRouter) para una
-evaluación académica estructurada.
+en memoria y se las envía en bloque a un modelo multimodal (Gemini, OpenRouter, Groq o
+Hugging Face) para una evaluación académica estructurada.
 
 Uso:
     python3 execution/evaluar_examen.py --pdf examenes/01/examen_estudiantes/Ana_Alcala.pdf
     python3 execution/evaluar_examen.py --pdf <ruta> [--modelo gemini-2.5-flash] [--dpi 250] [--rubrica <ruta_yaml>]
+    python3 execution/evaluar_examen.py --pdf <ruta> --api-backend huggingface --modelo Qwen/Qwen2.5-VL-72B-Instruct:cheapest
 
 Salida (stdout, JSON):
     {
@@ -427,6 +428,74 @@ def evaluar_con_openrouter(
     return choice.message.content, tokens
 
 
+def evaluar_con_huggingface(
+    images_bytes: list[bytes],
+    modelo: str,
+    system_instruction: str,
+    api_key: str,
+) -> tuple[str, dict]:
+    """Evalúa usando Hugging Face Inference Providers (API compatible con OpenAI)."""
+    import base64
+    from openai import OpenAI
+
+    client = OpenAI(
+        api_key=api_key,
+        base_url="https://router.huggingface.co/v1",
+    )
+
+    user_content = []
+    for i, img_bytes in enumerate(images_bytes, start=1):
+        b64 = base64.b64encode(img_bytes).decode("utf-8")
+        user_content.append({
+            "type": "text",
+            "text": f"--- Página {i} de {len(images_bytes)} ---",
+        })
+        user_content.append({
+            "type": "image_url",
+            "image_url": {
+                "url": f"data:image/png;base64,{b64}",
+                "detail": "high",
+            },
+        })
+    user_content.append({
+        "type": "text",
+        "text": "Analiza el examen completo mostrado en las imágenes anteriores y responde con el JSON de evaluación.",
+    })
+
+    messages = [
+        {"role": "system", "content": system_instruction},
+        {"role": "user", "content": user_content},
+    ]
+
+    response = client.chat.completions.create(
+        model=modelo,
+        messages=messages,
+        temperature=0.2,
+        max_tokens=8192,
+        response_format={"type": "json_object"},
+    )
+
+    tokens = {}
+    try:
+        if hasattr(response, 'usage') and response.usage:
+            tokens = {
+                "prompt": response.usage.prompt_tokens,
+                "respuesta": response.usage.completion_tokens,
+                "total": response.usage.total_tokens,
+            }
+    except (AttributeError, TypeError):
+        pass
+
+    if not response or not hasattr(response, 'choices') or not response.choices:
+        raise RuntimeError(f"El modelo no devolvió una respuesta válida. Es probable que no soporte imágenes o esté caído en Hugging Face.")
+
+    choice = response.choices[0]
+    if not choice.message or choice.message.content is None:
+        raise RuntimeError(f"El modelo devolvió un mensaje vacío. Verifica si el modelo '{modelo}' soporta multimodalidad (visión) en Hugging Face.")
+
+    return choice.message.content, tokens
+
+
 def evaluar_con_groq(
     images_bytes: list[bytes],
     modelo: str,
@@ -521,6 +590,10 @@ def evaluar_examen(
 
     # ── 3. Llamar al modelo según backend ──────────────────────────────────────
     def _llamar_modelo():
+        if api_backend == "huggingface":
+            return evaluar_con_huggingface(
+                images_bytes, modelo, system_instruction, api_key
+            )
         if api_backend == "openrouter":
             return evaluar_con_openrouter(
                 images_bytes, modelo, system_instruction, api_key
@@ -593,6 +666,7 @@ Ejemplos:
   python3 execution/evaluar_examen.py --pdf examenes/01/examen_estudiantes/Ana_Alcala.pdf
   python3 execution/evaluar_examen.py --pdf <ruta> --modelo gemini-1.5-pro --dpi 300
   python3 execution/evaluar_examen.py --pdf <ruta> --api-backend openrouter --modelo qwen/qwen-2.5-vl-72b-instruct:free
+  python3 execution/evaluar_examen.py --pdf <ruta> --api-backend huggingface --modelo Qwen/Qwen2.5-VL-72B-Instruct:cheapest
         """,
     )
     parser.add_argument(
@@ -608,8 +682,8 @@ Ejemplos:
     parser.add_argument(
         "--api-backend",
         default="gemini",
-        choices=["gemini", "openrouter", "groq"],
-        help="Backend de API a usar: gemini, openrouter o groq. (default: gemini).",
+        choices=["gemini", "openrouter", "groq", "huggingface"],
+        help="Backend de API a usar: gemini, openrouter, groq o huggingface. (default: gemini).",
     )
     parser.add_argument(
         "--dpi",
@@ -653,7 +727,7 @@ def main():
         sys.exit(1)
 
     # ── Validar SDK según backend ──────────────────────────────────────────────
-    if args.api_backend in ["openrouter", "groq"]:
+    if args.api_backend in ["openrouter", "groq", "huggingface"]:
         if not _OPENROUTER_AVAILABLE:
             print(json.dumps({
                 "status": "error", "code": 1,
@@ -681,6 +755,9 @@ def main():
             except Exception:
                 pass
         key_name = "GROQ_API_KEY"
+    elif args.api_backend == "huggingface":
+        api_key = os.getenv("HF_TOKEN")
+        key_name = "HF_TOKEN"
     else:
         api_key = os.getenv("GOOGLE_API_KEY")
         key_name = "GOOGLE_API_KEY"

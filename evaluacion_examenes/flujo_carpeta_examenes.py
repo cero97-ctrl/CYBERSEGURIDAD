@@ -46,7 +46,7 @@ Ejemplos:
     parser.add_argument("--modelo", default="gemini-2.5-flash",
                         help="Modelo a usar (default: gemini-2.5-flash).")
     parser.add_argument("--api-backend", default="gemini",
-                        choices=["gemini", "openrouter", "groq"],
+                        choices=["gemini", "openrouter", "groq", "huggingface"],
                         help="Backend de API (default: gemini).")
     parser.add_argument("--dpi", type=int, default=250,
                         help="DPI de renderizado (default: 250).")

@@ -13,6 +13,10 @@ Suite modular de auditoría de seguridad ofensiva en Python. El proyecto permite
 ├── exportar_errores_json.py     # Exporta errores al RAG
 ├── clean_latex.py               # Limpieza de auxiliares LaTeX
 ├── git_update.py                # Wrapper Python para git
+├── git-update.sh                # Script bash para git
+├── update_repo.sh               # Script de actualización del repo
+├── README.md                    # Guía de trabajo del curso
+├── CODEOWNERS                   # Propietarios de archivos core (solo profesor)
 ├── requirements.txt             # Dependencias Python
 ├── passwords.txt                # Diccionario de contraseñas
 ├── users.txt                    # Diccionario de usuarios
@@ -29,11 +33,25 @@ Suite modular de auditoría de seguridad ofensiva en Python. El proyecto permite
 │   │   └── bruteforce_web.py    # G4: Fuerza bruta HTTP
 │   └── Fase_III/                # Aplicaciones web y reportes
 │       ├── web_crawler.py       # G1: Crawling web
-│       ├── generador_reportes.py# G2: Generación de reportes
+│       ├── reportes.py          # G2: Generación de reportes
 │       ├── vuln_sqli.py         # G3: Escáner SQLi
 │       └── vuln_xss_lfi.py      # G4: Escáner XSS / LFI
+├── evaluacion_examenes/         # Sistema de evaluación de exámenes con LLM
+│   ├── execution/               # Layer 3: ejecución
+│   │   ├── evaluar_examen.py    # Lee PDF y evalúa con LLM multimodal (JSON)
+│   │   ├── generar_informe.py   # JSON → informe LaTeX
+│   │   ├── compile_latex.py     # .tex → PDF
+│   │   └── alert_user.py        # Notificación audible
+│   ├── flujo_carpeta_examenes.py# Orquestador por carpeta de examen
+│   ├── flujo_evaluar_examen.py  # Orquestador flujo individual
+│   └── verificar_creditos.py    # Verificación de créditos
+├── plan_de_trabajo/             # Plan de trabajo y cronograma
+├── tareas/                      # Tareas y distribución semanal
+├── examenes-teoricos/           # Exámenes y solucionarios (privado, gitignored)
+├── calificaciones/              # Calificaciones de estudiantes (privado, gitignored)
 ├── docs/                        # Documentación LaTeX
 ├── .agent/                      # Archivos markdown con instrucciones para el agente AI (solo profesor)
+├── .github/workflows/           # CI/CD: protege auditoria.py y .gemini/
 ├── chroma_db/                   # Base vectorial ChromaDB (gitignored)
 └── historial_auditoria.json     # Resultados de ejecuciones
 ```
@@ -41,10 +59,11 @@ Suite modular de auditoría de seguridad ofensiva en Python. El proyecto permite
 ## Stack Tecnológico
 
 - **Lenguaje:** Python 3.11
-- **Librerías principales:** dnspython, scapy, python-nmap, requests, pysmb, impacket, beautifulsoup4, chromadb
+- **Librerías principales:** dnspython, scapy, python-nmap, requests, pysmb, impacket, chromadb
 - **Documentación:** LaTeX
 - **CI/CD:** GitHub Actions
 - **Vector DB:** ChromaDB + LangChain + Groq (Llama 3)
+- **Evaluación de exámenes:** LLMs multimodales (Gemini, OpenRouter, Groq, Hugging Face) vía `.env`
 
 ## Convenciones de Código
 
@@ -65,7 +84,7 @@ Suite modular de auditoría de seguridad ofensiva en Python. El proyecto permite
 | Grupo | Fase I | Fase II | Fase III |
 |-------|--------|---------|----------|
 | G1 | dns_recon.py | banner_grabber.py | web_crawler.py |
-| G2 | osint.py | smb_enumerator.py | generador_reportes.py |
+| G2 | osint.py | smb_enumerator.py | reportes.py |
 | G3 | discovery.py | bruteforce_ftp.py | vuln_sqli.py |
 | G4 | scanning.py | bruteforce_web.py | vuln_xss_lfi.py |
 
@@ -76,6 +95,10 @@ Suite modular de auditoría de seguridad ofensiva en Python. El proyecto permite
 ## Sistema RAG
 
 `knowledge_db.py` permite consultar soluciones a errores conocidos usando ChromaDB. Los errores se exportan desde `historial_auditoria.json` mediante `exportar_errores_json.py`.
+
+## Evaluación de Exámenes
+
+`evaluacion_examenes/` automatiza la corrección de exámenes con LLMs multimodales. El flujo individual (`flujo_evaluar_examen.py`) lee el PDF, genera un informe LaTeX y compila a PDF; `flujo_carpeta_examenes.py` orquesta una carpeta completa y `verificar_creditos.py` valida créditos académicos.
 
 ## Comandos Útiles
 
@@ -89,13 +112,17 @@ python knowledge_db.py -c "scapy" -q "error de permisos"
 # Sincronizar con git
 python3 git_update.py "mensaje del commit"
 
+# Evaluar un examen con LLM
+python3 flujo_evaluar_examen.py --pdf examenes/01/examen_estudiantes/Nombre.pdf
+
 # Limpiar auxiliares LaTeX
 python clean_latex.py
 ```
 
 ## Notas
 
-- `auditoria.py` y `.agent/` son responsabilidad exclusiva del profesor (`cero97-ctrl`)
+- `auditoria.py`, `.agent/` y `CODEOWNERS` son responsabilidad exclusiva del profesor (`cero97-ctrl`)
 - Validar con el schema antes de hacer push
 - No hay framework de tests formal; cada módulo se prueba con su bloque `if __name__ == "__main__":`
 - La documentación del proyecto se debe realizar en formato LaTeX
+- `examenes-teoricos/` y `calificaciones/` son privados (gitignored)
